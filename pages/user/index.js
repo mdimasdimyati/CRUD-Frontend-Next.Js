@@ -14,12 +14,13 @@ const UserPage = () => {
     const [usersData, setUsersData] = useState([])
     const [isModalShow, setModalShow] = useState(false)
 
+
     const getUsers = async () => {
         try {
             const {data} = await axios.get("http://localhost:5000/users")
             
             setUsersData(data.users)
-            // console.log(data.users);
+            // console.log(data);
         } catch (error) {
             console.log(error);            
         }
@@ -76,16 +77,17 @@ const UserPage = () => {
                     <Th>Name</Th>
                     <Th>Email</Th>
                     <Th isNumeric>Role</Th>
+                    <Th>Action</Th>
                     </Tr>
                 </Thead>
                 <Tbody>
-                    {usersData.map((users) => {
+                    {usersData.map((users) => (
                         <Tr key={users.id}>
                             <Td>{users.fullName}</Td>
                             <Td>{users.email}</Td>
                             <Td isNumeric>{users.role}</Td>
                         </Tr>
-                    })}
+                    ))}
                   
                 </Tbody>
             </Table>
