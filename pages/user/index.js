@@ -90,6 +90,8 @@ const UserPage = () => {
         }
     }
 
+
+
     const updateUser = async (id, form) => {
         try {
             const config = { "content-type" : "Aplication/json",}
@@ -107,7 +109,17 @@ const UserPage = () => {
             console.log(error);
         }
     }
+    const deleteUser = async (id) => {
+        try {
+            await axios.delete(`http://localhost:5000/users/${id}`)
 
+            //untuk mereturn data yang tidak di delete
+            const filteredUsers = usersData.filter((user) => user.id !== id)
+            setUsersData(filteredUsers)
+        } catch (error) {
+            console.log(error);
+        }
+    }
     useEffect(() => {
        getUsers();
     }, [])
@@ -132,8 +144,11 @@ const UserPage = () => {
                             <Td>{value.email}</Td>
                             <Td isNumeric>{value.role}</Td>
                             <Td>
-                                <Button colorScheme="whatsapp" my={5} width="100%" type="submit" onClick={() => {getUserById(value.id)}}>
+                                <Button colorScheme="whatsapp" my={2} width="100%" type="submit" onClick={() => {getUserById(value.id)}}>
                                     Edit
+                                </Button>
+                                <Button colorScheme="red" my={3} width="100%" type="submit" onClick={() => {const result = confirm("Want to delete?"); result && deleteUser(value.id)}}>
+                                    Delete
                                 </Button>
                             </Td>
                         </Tr>
